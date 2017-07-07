@@ -12,12 +12,11 @@ def printTable(table):
     countedItems = 0
     totalItems = len(table) * len(table[0])
     while (countedItems < totalItems):
+        justifyLen = longestStringInRow[rowIndex] - len(table[rowIndex][itemIndex])
         if (rowIndex < len(table) - 1):
-            justifyLen = longestStringInRow[rowIndex] - len(table[rowIndex][itemIndex])
             print((" " * justifyLen) + table[rowIndex][itemIndex].rjust(justifyLen) + " ", end="")
             rowIndex += 1
         else:
-            justifyLen = longestStringInRow[rowIndex] - len(table[rowIndex][itemIndex])
             print((" " * justifyLen) + table[rowIndex][itemIndex].rjust(justifyLen))
             rowIndex = 0
             itemIndex += 1
