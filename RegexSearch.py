@@ -1,4 +1,4 @@
-import os, re
+import os, re, sys
 
 def checkFolderPath(folderPath):
     return (os.path.exists(folderPath))
@@ -17,13 +17,23 @@ def searchFile(fullFilePath):
 def findNumberOf(searchPhrase, fileContent):
     searchRegex = re.compile(searchPhrase, re.IGNORECASE)
     contentList = searchRegex.findall(fileContent)
-    print(searchPhrase + ' found!')
-    return len(contentList)
+    if (len(contentList) > 0):
+        print(searchPhrase + ' found!')
+        return len(contentList)
+    else:
+        return 0
 
 def main():
+    useCommandLine = False
+    if (len(sys.argv) > 1):
+        useCommandLine = True
     useDefaultValid = False
+    usedDefault = True
     while (not useDefaultValid):
-        useDefault = input('Use default filepath? (y/n): \n')
+        if (useCommandLine and usedDefault):
+            useDefault = sys.argv[1]
+        else:
+            useDefault = input('Use default filepath? (y/n): \n')
         if (useDefault.lower() == 'y'):
             folderPath = str(os.path.expanduser('~/Documents'))
             useDefaultValid = True
@@ -31,6 +41,7 @@ def main():
             useDefaultValid = True
         else:
             print('Could not recognize input. Please enter \neither y for yes, or n for no\n')
+            usedDefault = False
     if (useDefaultValid):
         folderPathValid = True
     else:
@@ -40,7 +51,10 @@ def main():
         folderPathValid = checkFolderPath(folderPath)
         if (not folderPathValid):
             print('Folder path invalid!\n')
-    phrase = input('Enter a phrase to search text files for: \n')
+    if (useCommandLine):
+        phrase = sys.argv[2]
+    else:
+        phrase = input('Enter a phrase to search text files for: \n')
     for file in os.listdir(folderPath):
         if (checkIfTxt(file)):
             fullPath = folderPath + '/' + file

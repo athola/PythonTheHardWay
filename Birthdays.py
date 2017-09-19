@@ -1,3 +1,5 @@
+import sys
+
 birthdays = {'Alice': 'Apr 1', 'Bob': 'Dec 12', 'Carol': 'Mar 4'}
 
 while True:
@@ -11,6 +13,9 @@ while True:
     else:
         print('I do not have birthday information for ' + name)
         print('What is their birthday')
-        bday = input()
+        if (useCommandLine):
+            bday = sys.argv[2]
+        else:
+            bday = input()
         birthdays[name] = bday
         print('Birhday database updated.')

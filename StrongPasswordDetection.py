@@ -1,7 +1,10 @@
-import re
+import re, sys
 
-def getPassword():
-    password = input("Please enter a valid password: ")
+def getPassword(commandLineFlag):
+    if (commandLineFlag):
+        password = sys.argv[1]
+    else:
+        password = input("Please enter a valid password: ")
     return password
 
 def validatePassword(password):
@@ -19,17 +22,21 @@ def validatePassword(password):
     return validPassword
 
 def main():
+    useCommandLine = False
+    if (len(sys.argv) > 1):
+        useCommandLine = True
     print("A strong password has at least eight characters,")
     print("contains both uppercase and lowercase characters,")
     print("and has at least one digit.")
     passwordValidated = False
     while (not passwordValidated):
-        thePw = getPassword()
+        thePw = getPassword(useCommandLine)
         if (validatePassword(thePw)):
             passwordValidated = True
             print("Valid password!")
         else:
             print("Password invalid! Please try again.")
             print("")
+            useCommandLine = False
 
 main()

@@ -1,4 +1,4 @@
-import re
+import re, sys
 
 def stripString(string, char=""):
     newStr = ""
@@ -14,8 +14,15 @@ def stripString(string, char=""):
     return newStr
 
 def main():
-    string = input("Please enter a string: ")
-    char = input("Please enter a character to strip from the string: ")
+    useCommandLine = False
+    if (len(sys.argv) > 1):
+        useCommandLine = True
+    if (useCommandLine):
+        string = sys.argv[1]
+        char = sys.argv[2]
+    else:
+        string = input("Please enter a string: ")
+        char = input("Please enter a character to strip from the string: ")
     newString = stripString(string, char)
     print(newString)
 

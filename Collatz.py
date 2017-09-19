@@ -1,5 +1,10 @@
+import sys
+
 def main():
-    startingNumber = enterNumber()
+    useCommandLine = False
+    if (len(sys.argv) > 1):
+        useCommandLine = True
+    startingNumber = enterNumber(useCommandLine)
     print()
     checkIfOne(startingNumber)
     
@@ -14,10 +19,14 @@ def collatz(number):
         print(expression)
         return (expression)
 
-def enterNumber():
+def enterNumber(commandLineFlag):
     while True:
         print('Enter a number: ')
-        number = input()
+        if (commandLineFlag):
+            number = sys.argv[1]
+            print(number)
+        else:
+            number = input()
         try:
             return (int(number))
         except ValueError:
